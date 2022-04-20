@@ -11,13 +11,12 @@ jobs:
           name: Show current branch
           command: echo ${CURRENT_BRANCH}
       - restore_cache: 
-          key: app-{{ checksum "package.jason" }}
-      - run:
-          name: Install yarn
-          command: npm install -g yarn
+          key:
+            - app-{{ checksum "package.jason" }}
+            - app-
       - run:
           name: Install dependencies
-          command: yarn install
+          command: npm install
       - save_cache:
           paths:
             - node_modules
