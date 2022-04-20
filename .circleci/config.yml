@@ -107,7 +107,7 @@ workflows:
                 - develop
                 - staging
                 - master
-      - deploy-to-aws-cloudfront:
+      - deploy-to-aws-cloundfront:
           requires:
             - deploy-to-aws-s3
           filters:
