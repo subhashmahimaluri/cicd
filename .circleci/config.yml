@@ -21,6 +21,7 @@ jobs:
           paths:
             - node_modules
           key: app-{{ checksum "package.jason" }}
+
 deploy-to-aws-s3:
   docker:
     - image: circleci/node:latest
@@ -57,7 +58,8 @@ deploy-to-aws-s3:
           else
             aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
           fi
-deploy-to-aws-cloundfront:
+
+deploy-to-aws-cloudfront:
   docker:
     - image: circleci/node:latest
   working_directory: ~/repo
@@ -94,6 +96,7 @@ deploy-to-aws-cloundfront:
           else
             aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\*
           fi
+
 workflows:
   build_and_deploy:
     jobs:
@@ -107,7 +110,7 @@ workflows:
                 - develop
                 - staging
                 - master
-      - deploy-to-aws-cloundfront:
+      - deploy-to-aws-cloudfront:
           requires:
             - deploy-to-aws-s3
           filters:
